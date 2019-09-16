@@ -1,8 +1,10 @@
 package be.jkin.q2service.controllers;
 
 import be.jkin.q2service.model.Kudos;
+import be.jkin.q2service.queue.Publisher;
 import be.jkin.q2service.repository.KudosRepository;
 
+import com.google.gson.Gson;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class KudosController {
     @Autowired
     private KudosRepository kudosRepository;
 
+    @Autowired
+    Publisher publisher;
+
     @GetMapping("/kudos")
     public List<Kudos> getAllKudos()
     {
@@ -28,7 +33,6 @@ public class KudosController {
     @GetMapping("/kudos/{id}")
     public ResponseEntity<Kudos> getKudosById(@PathVariable(value = "id") ObjectId id) throws Exception
     {
-        //return kudosRepository.findBy_id(id);
         Kudos kudos = kudosRepository.findBy_id(id);
         return ResponseEntity.ok().body(kudos);
     }
@@ -36,7 +40,15 @@ public class KudosController {
     @PostMapping("/kudos")
     public Kudos createKudos(@Valid @RequestBody Kudos kudos)
     {
-        return kudosRepository.save(kudos);
+       @Valid Kudos newKudos = kudosRepository.save(kudos);
+
+       //Send to Queue
+       Gson gson = new Gson();
+       String json = gson.toJson(newKudos);
+
+        publisher.SendMessageToQueue(json);
+
+       return newKudos;
     }
 
     @PutMapping("/kudos/{id}")
