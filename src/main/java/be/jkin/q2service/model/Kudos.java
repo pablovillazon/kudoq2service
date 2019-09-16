@@ -1,12 +1,16 @@
 package be.jkin.q2service.model;
 
+//import javax.persistence.Id;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
 
 public class Kudos {
-    @Id private String id;
+    //private Long id;
+    @Id  private ObjectId _id;
     private String fuente;
     private String destino;
     private String tema;
@@ -15,6 +19,42 @@ public class Kudos {
     private String texto;
 
 
+    //Constructors
+    public Kudos(){}
+
+    public Kudos(ObjectId _id, String fuente, String destino, String tema, Date fecha, String lugar, String texto)
+    {
+        this._id = _id;
+        this.fuente = fuente;
+        this.destino = destino;
+        this.tema = tema;
+        this.fecha = fecha;
+        this.lugar = lugar;
+        this.texto = texto;
+    }
+
+    public void setId(ObjectId _id)
+    {
+        this._id = _id;
+    }
+
+    public String getId()
+    {
+        return this._id.toHexString();
+    }
+
+    /*
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId()
+    {
+        return id;
+    }
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    */
     public String getFuente() {
         return fuente;
     }
