@@ -17,8 +17,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfiguration {
-    public static final String QUEUE_NAME = "kudos-queue";
-    public static final String EXCHANGE_NAME = "kudos-queue-exchange";
 
     @Value("${spring.rabbitmq.host}")
     private String host;
@@ -35,22 +33,31 @@ public class RabbitConfiguration {
     @Value("${spring.rabbitmq.virtual-host}")
     private String virtualHost;
 
+    @Value("${spring.rabbitmq.template.default-receive-queue}")
+    private String queue;
+
+    @Value("${spring.rabbitmq.template.exchange}")
+    private String exchange;
+
+    @Value("${spring.rabbitmq.template.routing-key}")
+    private String routingKey;
+
     @Bean
     public Queue queue()
     {
-        return new Queue(QUEUE_NAME, false);
+        return new Queue(queue);
     }
 
     @Bean
     public DirectExchange exchange()
     {
-        return new DirectExchange(EXCHANGE_NAME);
+        return new DirectExchange(exchange);
     }
 
     @Bean
     Binding binding(Queue queue, DirectExchange exchange)
     {
-        return BindingBuilder.bind(queue).to(exchange).with(QUEUE_NAME);
+        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
     @Bean

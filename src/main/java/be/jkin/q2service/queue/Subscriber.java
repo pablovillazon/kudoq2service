@@ -10,7 +10,7 @@ public class Subscriber {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Subscriber.class);
 
-    @RabbitListener(queues = "kudos-queue")
+    @RabbitListener(queues = "${spring.rabbitmq.template.default-receive-queue}")
     public void onMessageFromRabbitMQ(final String messageFromRabbitMQ)
     {
         LOGGER.info("{}", messageFromRabbitMQ);
