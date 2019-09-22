@@ -37,6 +37,14 @@ public class KudosController {
         return ResponseEntity.ok().body(kudos);
     }
 
+    @GetMapping("/kudos/ByTargetNickname/{nickname}")
+    public ResponseEntity<List<Kudos>> getKudosByNickname(@PathVariable(value = "nickname") String nickname) throws Exception
+    {
+        List<Kudos> kudos = kudosRepository.findByDestino(nickname);
+        return ResponseEntity.ok().body(kudos);
+
+    }
+
     @PostMapping("/kudos")
     public Kudos createKudos(@Valid @RequestBody Kudos kudos)
     {

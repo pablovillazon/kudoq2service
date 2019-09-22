@@ -13,16 +13,24 @@ public class Kudos {
     @Id  private ObjectId _id;
     private String fuente;
     private String destino;
-    private String tema;
+    private KudosTema tema;
     private Date fecha;
     private String lugar;
     private String texto;
 
 
+    public enum KudosTema{
+        THANKS,
+        WELL_DONE,
+        GREAT_JOB,
+        CHALA,
+        GENERICO
+    }
+
     //Constructors
     public Kudos(){}
 
-    public Kudos(ObjectId _id, String fuente, String destino, String tema, Date fecha, String lugar, String texto)
+    public Kudos(ObjectId _id, String fuente, String destino, KudosTema tema, Date fecha, String lugar, String texto)
     {
         this._id = _id;
         this.fuente = fuente;
@@ -71,11 +79,11 @@ public class Kudos {
         this.destino = destino;
     }
 
-    public String getTema() {
+    public KudosTema getTema() {
         return tema;
     }
 
-    public void setTema(String tema) {
+    public void setTema(KudosTema tema) {
         this.tema = tema;
     }
 
