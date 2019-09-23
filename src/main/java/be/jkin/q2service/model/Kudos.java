@@ -1,15 +1,11 @@
 package be.jkin.q2service.model;
 
-//import javax.persistence.Id;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.util.Date;
 
 public class Kudos {
-    //private Long id;
     @Id  private ObjectId _id;
     private String fuente;
     private String destino;
@@ -17,7 +13,6 @@ public class Kudos {
     private Date fecha;
     private String lugar;
     private String texto;
-
 
     public enum KudosTema{
         THANKS,
@@ -51,18 +46,6 @@ public class Kudos {
         return this._id.toHexString();
     }
 
-    /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId()
-    {
-        return id;
-    }
-    public void setId(long id)
-    {
-        this.id = id;
-    }
-    */
     public String getFuente() {
         return fuente;
     }
